@@ -43,6 +43,11 @@ player = Player(
     input('Greetings adventurer! What is your name?\n'), room['outside'])
 
 
+def update_player_room(direction_to):
+    global player
+    player.current_room = player.current_room.__getattribute__(direction_to)
+
+
 # Write a loop that:
 while True:
     movement_error_message = "There is nothing for you in that direction.\n"
@@ -58,6 +63,43 @@ while True:
 
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
+    if player.current_room.name == "Outside Cave Entrance":
+        if user_input == 'n':
+            update_player_room(f'{user_input}_to')
+        elif user_input == 'e' or 'w' or 's':
+            print(movement_error_message)
+        else:
+            print(invalid_input_message)
+    elif player.current_room.name == "Foyer":
+        if user_input == 'n' or 'e' or 's':
+            update_player_room(f'{user_input}_to')
+        elif user_input == 'w':
+            print(movement_error_message)
+        else:
+            print(invalid_input_message)
+    elif player.current_room.name == "Grand Overlook":
+        if user_input == 's':
+            update_player_room(f'{user_input}_to')
+        elif user_input == 'n' or 'e' or 'w':
+            print(movement_error_message)
+        else:
+            print(invalid_input_message)
+    elif player.current_room.name == "Narrow Passage":
+        if user_input == 'w' or 'n':
+            update_player_room(f'{user_input}_to')
+        elif user_input == 'e' or 's':
+            print(invalid_input_message)
+        else:
+            print(movement_error_message)
+    elif player.current_room.name == "Treasure Chamber":
+        if user_input == 's':
+            update_player_room(f'{user_input}_to')
+        elif user_input == 'n' or 'e' or 'w':
+            print(movement_error_message)
+        else:
+            print(invalid_input_message)
+    else:
+        print('Oh wow. How did you get off the map?')
 
     # If the user enters "q", quit the game.
     if user_input == 'q':
